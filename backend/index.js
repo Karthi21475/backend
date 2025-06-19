@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 dotenv.config();
 const app=express();
 app.use(express.json());
-app.use(cors({ origin: 'https://frontend-git-main-karthi21475s-projects.vercel.app/' }));
+app.use(cors());
 app.use(cookieParser());
 app.use('/api/user',UserRoutes);
 app.use('/api/products',ProductRoutes);
