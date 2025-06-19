@@ -6,7 +6,7 @@ const createToken=(res,user)=>{
     
     res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "None",
         maxAge: 30*24*3600000
     });
