@@ -52,7 +52,12 @@ router.post('/login',async(req,res)=>{
     }
 });
 router.post('/logout',async(req,res)=>{
-    res.cookie('token',"");
+    res.cookie('token',"",{
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+        expires: new Date(0)
+    });
     res.json({message:"User Logged Out"});
 });
 
