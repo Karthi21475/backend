@@ -10,10 +10,10 @@ const router=express.Router();
 
 
 
-router.post('/auth',Authenticate,async(req,res)=>{
+router.get('/auth',Authenticate,async(req,res)=>{
     res.json({message:'User Authenticated'})
 })
-router.post('/admincheck',Authenticate,isAdmin,async(req,res)=>{
+router.get('/admincheck',Authenticate,isAdmin,async(req,res)=>{
     res.json({message:'Is Admin'})
 })
 router.post('/signup',async(req,res)=>{
