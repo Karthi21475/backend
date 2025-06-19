@@ -12,8 +12,10 @@ router.route('/').post(Authenticate,isAdmin,async(req,res)=>{
     const Newproduct = new Product(details)
     try{
         await Newproduct.save()
+        res.json({message:'Product Added'});
         console.log("Product Added")
     }catch(err){
+        res.json({message:`${err.message}`});
         console.error(err.message);
     }
 }).get(async(req,res)=>{
@@ -21,6 +23,7 @@ router.route('/').post(Authenticate,isAdmin,async(req,res)=>{
     try{
         res.json(all)
     }catch(err){
+        res.json({message:`${err.message}`});
         console.log(err.message);
     }
 })
