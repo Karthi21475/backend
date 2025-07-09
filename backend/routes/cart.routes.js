@@ -7,13 +7,11 @@ const router = express.Router();
 router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
-    console.log(res.user);
     const NewcartItem=new Cartitemmodel(cartItemData);
 
     try{
         await NewcartItem.save()
-        console.log("item added")
-        res.json({message:"Item Added to Cart",user:`${res.user}`})
+        res.json({message:"Item Added to Cart"})
     }catch(err){
         res.json({message:`${err}`})
         console.log(err);
