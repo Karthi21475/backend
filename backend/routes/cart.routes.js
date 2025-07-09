@@ -7,7 +7,7 @@ const router = express.Router();
 router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
-
+    console.log(res.user);
     const NewcartItem=new Cartitemmodel(cartItemData);
 
     try{
