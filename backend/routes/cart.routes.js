@@ -7,7 +7,6 @@ const router = express.Router();
 router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
-
     const NewcartItem=new Cartitemmodel(cartItemData);
     const item=await Cartmodel.findById({userId:res.user._id});
     console.log(item);
