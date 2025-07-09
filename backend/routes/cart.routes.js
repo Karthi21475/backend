@@ -13,7 +13,7 @@ router.route('/').post(authenticate,async(req,res)=>{
     try{
         await NewcartItem.save()
         console.log("item added")
-        res.json({message:"Item Added to Cart"})
+        res.json({message:"Item Added to Cart",user:`${res.user}`})
     }catch(err){
         res.json({message:`${err}`})
         console.log(err);
