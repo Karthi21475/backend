@@ -38,7 +38,7 @@ router.route('/:id').put(authenticate,async(req,res)=>{
     const {quantity}=req.body;
     
     await Cartitemmodel.findByIdAndUpdate({_id:id},{quantity:quantity});
-    const items = await Cartmodel.findById({userId:res.user.id});
+    const items = await Cartmodel.findOne({userId:res.user.id});
     items.items=items.items.map((item)=>{
         if(item._id.toString()===id){
             item.quantity=quantity;
@@ -52,7 +52,7 @@ router.route('/:id').put(authenticate,async(req,res)=>{
 }).delete(authenticate,async(req,res)=>{
     const {id}=req.params;
     await Cartitemmodel.findByIdAndDelete({_id:id})
-    // const items = await Cartmodel.findById({userId:res.user._id})
+    // const items = await Cartmodel.findOne({userId:res.user._id})
     res.json({message:"Deleted it broo"})
 })
 
