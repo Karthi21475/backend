@@ -17,7 +17,7 @@ router.route('/').post(authenticate,async(req,res)=>{
             // await Cartmodel.create({userId:res.user.id,items:[NewcartItem]})
             NewOrder.save();
         }else{
-            items.items.push(NewcartItem)
+            await Cartmodel.findByIdAndUpdate(items._id,{items:[...items.items,NewcartItem]});
         }
         console.log("item added")
         res.json({message:"Item Added to Cart"})
