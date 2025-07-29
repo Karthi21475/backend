@@ -8,16 +8,15 @@ router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
     const NewcartItem=new Cartitemmodel(cartItemData);
-    const items=await Cartmodel.findOne({userId:res.user.id});
+    const item=await Cartmodel.findOne({userId:res.user.id});
 
     try{
         await NewcartItem.save()
-        if(!items){
+        if(!item){
             const NewOrder=new Cartmodel({userId:res.user.id,items:[NewcartItem]});
-            // await Cartmodel.create({userId:res.user.id,items:[NewcartItem]})
             NewOrder.save();
         }else{
-            await Cartmodel.findByIdAndUpdate(items._id,{items:[...items.items,NewcartItem]});
+            await Cartmodel.findByIdAndUpdate({_id:item._id},{items:[...items.items,NewcartItem]});
         }
         console.log("item added")
         res.json({message:"Item Added to Cart"})
