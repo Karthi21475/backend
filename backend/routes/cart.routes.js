@@ -4,7 +4,7 @@ import Cartitemmodel from "../models/cartitemsmodel.js";
 import Cartmodel from '../models/cartmodel.js'
 const router = express.Router();
 
-router.route('/').post(async(req,res)=>{
+router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
     const NewcartItem=new Cartitemmodel(cartItemData);
