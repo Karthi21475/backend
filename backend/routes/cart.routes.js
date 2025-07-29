@@ -8,7 +8,7 @@ router.route('/').post(async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
     const NewcartItem=new Cartitemmodel(cartItemData);
-    console.log(res);
+    console.log(res.user);
     const item=await Cartmodel.findOne({userId:res.user._id});
     console.log(item);
 
