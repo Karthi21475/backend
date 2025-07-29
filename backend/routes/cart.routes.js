@@ -8,14 +8,14 @@ router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
     const NewcartItem=new Cartitemmodel(cartItemData);
-    const item=await Cartmodel.findOne({userId:res.user.id});
+    const items=await Cartmodel.findOne({userId:res.user.id});
 
     try{
         await NewcartItem.save()
-        if(!item){
-            await Cartmodel.create({userId:res.user.id,item:[NewcartItem]})
+        if(!items){
+            await Cartmodel.create({userId:res.user.id,items:[NewcartItem]})
         }else{
-            item.item.push(NewcartItem)
+            items.items.push(NewcartItem)
         }
         console.log("item added")
         res.json({message:"Item Added to Cart"})
@@ -37,7 +37,14 @@ router.route('/:id').put(authenticate,async(req,res)=>{
     const {quantity}=req.body;
     
     await Cartitemmodel.findByIdAndUpdate({_id:id},{quantity:quantity});
-    // const items = await Cartmodel.findById({userId:res.user._id});
+    const items = await Cartmodel.findById({userId:res.user.id});
+    items.items=items.items.map((item)=>{
+        if(item._id.toString()===id){
+            item.quantity=quantity;
+        }
+        return item;
+    })
+
 
     res.json({message:"Upadated it broo"})
     
