@@ -8,17 +8,15 @@ router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
     const NewcartItem=new Cartitemmodel(cartItemData);
-    console.log(res.user._id);
-    console.log(res.user.id);
-    const item=await Cartmodel.findOne({userId:res.user._id});
+    const item=await Cartmodel.findOne({userId:res.user.id});
 
     try{
         await NewcartItem.save()
-        // if(!item){
-        //     await Cartmodel.create({userId:res.user._id,item:[NewcartItem]})
-        // }else{
-        //     item.item.push(NewcartItem)
-        // }
+        if(!item){
+            await Cartmodel.create({userId:res.user.id,item:[NewcartItem]})
+        }else{
+            item.item.push(NewcartItem)
+        }
         console.log("item added")
         res.json({message:"Item Added to Cart"})
     }catch(err){
