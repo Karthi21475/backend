@@ -35,12 +35,12 @@ router.route('/').post(authenticate,async(req,res)=>{
 })
 router.route('/:id').put(authenticate,async(req,res)=>{
     const {id}=req.params;
-    const {quantity}=req.body;
+    const {quantity,productid}=req.body;
     
     await Cartitemmodel.findByIdAndUpdate({_id:id},{quantity:quantity});
     const items = await Cartmodel.findOne({userId:res.user.id});
     items.items=items.items.map((item)=>{
-        if(item._id.toString()===id){
+        if(item.productid==productid){
             item.quantity=quantity;
         }
         return item;
