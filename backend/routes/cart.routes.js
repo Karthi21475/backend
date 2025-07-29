@@ -13,7 +13,9 @@ router.route('/').post(authenticate,async(req,res)=>{
     try{
         await NewcartItem.save()
         if(!items){
-            await Cartmodel.create({userId:res.user.id,items:[NewcartItem]})
+            const NewOrder=new Cartmodel({userId:res.user.id,items:[NewcartItem]});
+            // await Cartmodel.create({userId:res.user.id,items:[NewcartItem]})
+            NewOrder.save();
         }else{
             items.items.push(NewcartItem)
         }
