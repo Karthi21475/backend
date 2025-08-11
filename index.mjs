@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import UserRoutes from "./routes/User.routes.js";
-import ProductRoutes from "./routes/product.routes.js";
-import CartRoutes from './routes/cart.routes.js'
+import UserRoutes from "./routes/User.routes.mjs";
+import ProductRoutes from "./routes/product.routes.mjs";
+import CartRoutes from './routes/cart.routes.mjs'
 import path from 'path';
 import { fileURLToPath } from "url";
 

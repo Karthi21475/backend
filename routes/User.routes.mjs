@@ -1,10 +1,10 @@
 import express from 'express';
-import createToken from "../middlewares/CreateToken.js";
-import Authenticate from "../middlewares/Auth.js";
-import Usermodel from "../models/Usermodel.js";
+import createToken from "../middlewares/CreateToken.mjs";
+import Authenticate from "../middlewares/Auth.mjs";
+import Usermodel from "../models/Usermodel.mjs";
 import bcrypt from "bcryptjs";
 import cookieParser from 'cookie-parser';
-import isAdmin from '../middlewares/isAdmin.js';
+import isAdmin from '../middlewares/isAdmin.mjs';
 
 const router=express.Router();
 

@@ -1,7 +1,7 @@
 import express from "express";
-import authenticate from "../middlewares/Auth.js";
-import Cartitemmodel from "../models/cartitemsmodel.js";
-import Cartmodel from '../models/cartmodel.js'
+import authenticate from "../middlewares/Auth.mjs";
+import Cartitemmodel from "../models/cartitemsmodel.mjs";
+import Cartmodel from '../models/cartmodel.mjs'
 const router = express.Router();
 
 router.route('/').post(authenticate,async(req,res)=>{

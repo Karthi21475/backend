@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import cartItemSchema from './cartitemsmodel.js';
+import cartItemSchema from './cartitemsmodel.mjs';
 
 const cartSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true },

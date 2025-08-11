@@ -1,7 +1,7 @@
 import express from 'express'
-import Product from "../models/Productmodel.js";
-import Authenticate from '../middlewares/Auth.js';
-import isAdmin from '../middlewares/isAdmin.js';
+import Product from "../models/Productmodel.mjs";
+import Authenticate from '../middlewares/Auth.mjs';
+import isAdmin from '../middlewares/isAdmin.mjs';
 
 const router =express.Router();
 
