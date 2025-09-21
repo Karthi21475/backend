@@ -30,10 +30,11 @@ router.post('/signup',async(req,res)=>{
     const hashedPassword=await bcrypt.hash(password,10);
     
     const newuser = new Usermodel({username ,password:hashedPassword,email});
-    const newcart = new Cartmodel({userId:user._id,items:[]})
-    
-    await newcart.save();
     await newuser.save();
+
+    const user=await Usermodel.findOne({username});
+    const newcart = new Cartmodel({userId:user._id,items:[]})
+    await newcart.save();
     
     res.json({message:"User Created"});
 });
