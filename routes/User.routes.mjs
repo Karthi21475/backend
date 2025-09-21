@@ -22,8 +22,9 @@ router.post('/signup',async(req,res)=>{
 
     const {username,password,email}=req.body;
         
-    const isExisting= await Usermodel.findOne({username});
-    if(isExisting){
+    const isUsernameExisting= await Usermodel.findOne({username});
+    const isEmailExisting= await Usermodel.findOne({email});
+    if(isUsernameExisting||isEmailExisting){
         return res.json({message:"username already taken"})
     }
     
