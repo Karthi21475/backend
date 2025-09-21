@@ -37,7 +37,6 @@ router.post('/signup',async(req,res)=>{
     await newuser.save();
 
     const user=await Usermodel.findOne({username});
-    console.log(user);
 
     const newcart = new Cartmodel({userId:user._id,items:[]})
     await newcart.save();
