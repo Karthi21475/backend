@@ -7,52 +7,51 @@ const router = express.Router();
 router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
-    const NewcartItem=new Cartitemmodel(cartItemData);
     const item=await Cartmodel.findOne({userId:res.user.id});
 
     try{
-        await NewcartItem.save()
         if(!item){
-            const NewOrder=new Cartmodel({userId:res.user.id,items:[NewcartItem]});
+            const NewOrder=new Cartmodel({userId:res.user.id,items:[cartItemData]});
             NewOrder.save();
         }else{
-            await Cartmodel.findByIdAndUpdate({_id:item._id},{items:[...item.items,NewcartItem]});
+            await Cartmodel.findByIdAndUpdate({_id:item._id},{items:[...item.items,cartItemData]});
         }
-        console.log("item added")
         res.json({message:"Item Added to Cart"})
     }catch(err){
         res.json({message:`${err}`})
         console.log(err);
     }
 }).get(authenticate,async(req,res)=>{
-    const items=await Cartitemmodel.find({});
-    // const item=await Cartmodel.findById({userId:res.user._id});
+    const item=await Cartmodel.findOne({userId:res.user.id});
     try{
-        res.json(items);
+        res.json({item});
     }catch(err){
         console.log(err.message);
     }
 })
 router.route('/:id').put(authenticate,async(req,res)=>{
     const {id}=req.params;
-    const {quantity,productid}=req.body;
+    const {quantity}=req.body;
     
     await Cartitemmodel.findByIdAndUpdate({_id:id},{quantity:quantity});
     const items = await Cartmodel.findOne({userId:res.user.id});
     items.items=items.items.map((item)=>{
-        if(item.productid==productid){
+        if(item._id==id){
             item.quantity=quantity;
         }
         return item;
     })
-
+    await items.save();
 
     res.json({message:"Upadated it broo"})
     
 }).delete(authenticate,async(req,res)=>{
     const {id}=req.params;
-    await Cartitemmodel.findByIdAndDelete({_id:id})
-    // const items = await Cartmodel.findOne({userId:res.user._id})
+
+    const items = await Cartmodel.findOne({userId:res.user.id})
+    items.items=items.items.filter(item=>item._id!=id);
+    await items.save();
+
     res.json({message:"Deleted it broo"})
 })
 
