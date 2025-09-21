@@ -10,20 +10,15 @@ router.route('/').post(authenticate,async(req,res)=>{
     const item=await Cartmodel.findOne({userId:res.user.id});
 
     try{
-        if(!item){
-            const NewOrder=new Cartmodel({userId:res.user.id,items:[cartItemData]});
-            NewOrder.save();
-        }else{
-            await Cartmodel.findByIdAndUpdate({_id:item._id},{items:[...item.items,cartItemData]});
-        }
+        await Cartmodel.findByIdAndUpdate({_id:item._id},{items:[...item.items,cartItemData]});
         res.json({message:"Item Added to Cart"})
     }catch(err){
         res.json({message:`${err}`})
         console.log(err);
     }
 }).get(authenticate,async(req,res)=>{
-    const item=await Cartmodel.findOne({userId:res.user.id});
     try{
+    const item=await Cartmodel.findOne({userId:res.user.id});
         res.json({item});
     }catch(err){
         console.log(err.message);

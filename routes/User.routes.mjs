@@ -5,6 +5,8 @@ import Usermodel from "../models/Usermodel.mjs";
 import bcrypt from "bcryptjs";
 import cookieParser from 'cookie-parser';
 import isAdmin from '../middlewares/isAdmin.mjs';
+import Cartitemmodel from '../models/cartitemsmodel.mjs';
+import Cartmodel from '../models/cartmodel.mjs';
 
 const router=express.Router();
 
@@ -26,9 +28,11 @@ router.post('/signup',async(req,res)=>{
     }
     
     const hashedPassword=await bcrypt.hash(password,10);
-
-    const newuser = new Usermodel({username ,password:hashedPassword,email});
     
+    const newuser = new Usermodel({username ,password:hashedPassword,email});
+    const newcart = new Cartmodel({userId:user._id,items:[]})
+    
+    await newcart.save();
     await newuser.save();
     
     res.json({message:"User Created"});
