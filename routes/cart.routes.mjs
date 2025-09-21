@@ -1,6 +1,5 @@
 import express from "express";
 import authenticate from "../middlewares/Auth.mjs";
-import Cartitemmodel from "../models/cartitemsmodel.mjs";
 import Cartmodel from '../models/cartmodel.mjs'
 const router = express.Router();
 
@@ -25,8 +24,7 @@ router.route('/').post(authenticate,async(req,res)=>{
 router.route('/:id').put(authenticate,async(req,res)=>{
     const {id}=req.params;
     const {quantity}=req.body;
-    
-    await Cartitemmodel.findByIdAndUpdate({_id:id},{quantity:quantity});
+
     const items = await Cartmodel.findOne({userId:res.user.id});
     items.items=items.items.map((item)=>{
         if(item._id==id){
