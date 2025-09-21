@@ -7,8 +7,7 @@ const cartItemSchema = new mongoose.Schema({
     },
     productname:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
     image:{
         type:String,
@@ -20,6 +19,4 @@ const cartItemSchema = new mongoose.Schema({
     quantity: { type: Number, required: true, min: 1 },
 });
 
-const Cartitemmodel=mongoose.model("Cartitems", cartItemSchema);
-
-export default Cartitemmodel;
+export default cartItemSchema;
