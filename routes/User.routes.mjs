@@ -24,8 +24,11 @@ router.post('/signup',async(req,res)=>{
         
     const isUsernameExisting= await Usermodel.findOne({username});
     const isEmailExisting= await Usermodel.findOne({email});
-    if(isUsernameExisting||isEmailExisting){
+    if(isUsernameExisting){
         return res.json({message:"username already taken"})
+    }
+    if(isEmailExisting){
+    return res.json({message:"email already in use"})
     }
     
     const hashedPassword=await bcrypt.hash(password,10);
@@ -34,6 +37,8 @@ router.post('/signup',async(req,res)=>{
     await newuser.save();
 
     const user=await Usermodel.findOne({username});
+    console.log(user);
+
     const newcart = new Cartmodel({userId:user._id,items:[]})
     await newcart.save();
     
