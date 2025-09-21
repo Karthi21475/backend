@@ -8,7 +8,7 @@ router.route('/').post(authenticate,async(req,res)=>{
     const {productid,productname,price,image} =req.body;
     const cartItemData={productid,productname,price,image,quantity:1}
     try{
-        await Cartmodel.findOneAndUpdate({userId:res.user.id},{items:[...items,cartItemData]});
+        await Cartmodel.findOneAndUpdate({userId:res.user.id},{$push:{items:cartItemData}});
         res.json({message:"Item Added to Cart"})
     }catch(err){
         res.json({message:`${err}`})
