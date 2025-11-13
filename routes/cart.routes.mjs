@@ -4,8 +4,8 @@ import Cartmodel from '../models/cartmodel.mjs'
 const router = express.Router();
 
 router.route('/').post(authenticate,async(req,res)=>{
-    const {id,productname,price,image} =req.body;
-    const cartItemData={id,productname,price,image,quantity:1}
+    const {_id,productname,price,image} =req.body;
+    const cartItemData={_id,productname,price,image,quantity:1}
     try{
         await Cartmodel.findOneAndUpdate({userId:res.user.id},{$push:{items:cartItemData}});
         res.json({message:"Item Added to Cart"})
