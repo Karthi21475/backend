@@ -13,7 +13,7 @@ const router=express.Router();
 
 
 router.get('/auth',Authenticate,async(req,res)=>{
-    res.json({message:'User Authenticated'})
+    res.json({message:'User Authenticated',isAdmin:res.user.isadmin})
 })
 router.get('/admincheck',Authenticate,isAdmin,async(req,res)=>{
     res.json({message:'Is Admin'})

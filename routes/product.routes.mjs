@@ -6,8 +6,8 @@ import isAdmin from '../middlewares/isAdmin.mjs';
 const router =express.Router();
 
 router.route('/').post(Authenticate,isAdmin,async(req,res)=>{
-    const {price,productid,productname,image}=req.body;
-    const details = {productid,productname,price,image};
+    const {price,productname,image}=req.body;
+    const details = {productname,price,image};
     const Newproduct = new Product(details)
     try{
         await Newproduct.save()
