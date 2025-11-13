@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const cartItemSchema = new mongoose.Schema({
-    productid: { 
-        type: Number,
-        required: true 
-    },
     productname:{
         type:String,
         required:true
