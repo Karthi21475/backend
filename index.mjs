@@ -19,7 +19,9 @@ app.use('/api/user',UserRoutes);
 app.use('/api/products',ProductRoutes);
 app.use('/api/cart',CartRoutes);
 app.use('/api/search',SearchRoutes);
-
+app.get('/',async(res,req)=>{
+    res.json({message:"Success"})
+})
 mongoose.connect(`${process.env.MONGODB_URI}`).then(() =>{
     console.log("MongoDB Connected")
     
