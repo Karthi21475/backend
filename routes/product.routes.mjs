@@ -18,10 +18,12 @@ router.route('/').post(Authenticate,isAdmin,async(req,res)=>{
         console.error(err.message);
     }
 }).get(async(req,res)=>{
+    const all=await Product.find({})
+    const cnt=all.length();
     const {limit,page}=req.query;
-    const all= await Product.find({}).skip(limit*(page-1)).limit(limit)
+    const Prods= await Product.find({}).skip(limit*(page-1)).limit(limit)
     try{
-        res.json(all)
+        res.json({Prods,cnt})
     }catch(err){
         res.json({message:`${err.message}`});
         console.log(err.message);
