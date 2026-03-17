@@ -11,7 +11,9 @@ router.get('/',async(req,res)=>{
         productname: { $regex: searchTerm, $options: "i" }
     })
     const cnt= prods.length;
-    const Prods=await prods.sort(val).skip(limit*(page-1)).limit(limit);
+    const Prods = await Productmodel.find({
+        productname: { $regex: searchTerm, $options: "i" }
+    }).sort(val).skip(limit*(page-1)).limit(limit);
     res.json({Prods,cnt});
 })
 
