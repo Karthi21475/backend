@@ -5,15 +5,19 @@ const router=express.Router();
 
 router.get('/',async(req,res)=>{
 
-    const {searchTerm,sortAsc,filter,page,limit}=req.query;
-    const val=filter=="true"?{price:sortAsc=="true"?1:-1}:{_id:1}
-    const prods = await Productmodel.find({
+    const {searchTerm,srt,Asc,page,limit}=req.query;
+    const cnt= await Productmodel.countDocuments(searchTerm?{
         productname: { $regex: searchTerm, $options: "i" }
-    })
-    const cnt= prods.length;
-    const Prods = await Productmodel.find({
+    }:{});
+    let Prods = Productmodel.find(searchTerm?{
         productname: { $regex: searchTerm, $options: "i" }
-    }).sort(val).skip(limit*(page-1)).limit(limit);
+    }:{})
+    if(srt=="true"){
+        console.log(srt)
+        Prods=Prods.sort({price:Asc=="true"?1:-1});
+    }
+    Prods=await Prods.skip(limit*(page-1)).limit(limit);
+    // console.log(Prods);
     res.json({Prods,cnt});
 })
 
