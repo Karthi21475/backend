@@ -11,9 +11,11 @@ import path from 'path';
 import { fileURLToPath } from "url";
 
 dotenv.config();
+const FE_URLS=process.env.FE_URL
+const allowedOrigins=FE_URLS.split(',').map(item => item.trim())
 const app=express();
 app.use(express.json());
-app.use(cors({ origin: process.env.FE_URL,credentials: true }));
+app.use(cors({ origin: allowedOrigins,credentials: true }));
 app.use(cookieParser());
 app.use('/api/user',UserRoutes);
 app.use('/api/products',ProductRoutes);
