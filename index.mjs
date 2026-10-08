@@ -9,6 +9,9 @@ import CartRoutes from './routes/cart.routes.mjs'
 import SearchRoutes from './routes/search.routes.mjs'
 import path from 'path';
 import { fileURLToPath } from "url";
+import dns from 'dns';
+
+dns.setServers(['8.8.8.8','1.1.1.1']);
 
 dotenv.config();
 const FE_URLS=process.env.FE_URL
